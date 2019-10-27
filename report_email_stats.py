@@ -6,9 +6,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 
-# def myfunc():
-#     print('test scheduler',datetime.now())
-
 
 def email_report_admin():
     admins = User.objects.filter(is_superuser=1)
@@ -26,7 +23,6 @@ def email_report_admin():
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)
     print('Email report sent to admin at ',datetime.now())
-
 
 
 
