@@ -16,9 +16,11 @@ def email_report_admin():
         recipient_list.append(item.email)
 
     message = '\n\nEmail records of last 30 minutes.\n'
-    for email in er:
-        message += 'Subject: ' + str(email.subject) + ', Time: ' + str(email.created.strftime("%m/%d/%Y, %H:%M:%S")) + '\n'
-
+    if len(er) > 0:
+        for email in er:
+            message += 'Subject: ' + str(email.subject) + ', Time: ' + str(email.created.strftime("%m/%d/%Y, %H:%M:%S")) + '\n'
+    else:
+        message = 'No email records found for last 30 minutes'
     subject = 'Email stats of last 30 minutes.'
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, recipient_list)
