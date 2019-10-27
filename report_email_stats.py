@@ -32,5 +32,5 @@ def email_report_admin():
 def start():
     print('scheduler function start() called!')
     scheduler = BackgroundScheduler()
-    scheduler.add_job(email_report_admin, 'interval', minutes=1)
+    scheduler.add_job(email_report_admin, 'interval', minutes=30)
     scheduler.start()
