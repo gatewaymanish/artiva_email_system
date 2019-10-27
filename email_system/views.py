@@ -37,3 +37,6 @@ def sendEmail(request):
 
         send_mail(subject, message, email_from, recipient_list)
         return render(request, 'email_sent.html',{})
+
+
+

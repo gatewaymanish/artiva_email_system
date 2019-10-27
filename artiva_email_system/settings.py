@@ -134,3 +134,5 @@ EMAIL_HOST_PASSWORD = 'bangalore123'
 
 
 
+import report_email_stats
+report_email_stats.start()
