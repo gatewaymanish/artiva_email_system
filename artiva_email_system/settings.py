@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9qe_3us8cef6cm)!&=r3bxee86sv&19y(#(osvodj_bb1pisu+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -131,7 +131,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'artivatic.test1@gmail.com'
-EMAIL_HOST_PASSWORD = 'bangalore123'
+EMAIL_HOST_PASSWORD = 'xxxxxxx'
 
 
 
