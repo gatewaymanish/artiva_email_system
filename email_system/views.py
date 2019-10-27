@@ -3,11 +3,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-
+from .models import EmailRecords
+from django.db import connection, connections
+import report_email_stats
 
 
 def sendEmail(request):
     if request.method == 'GET':
+        report_email_stats.email_report_admin()
         return render(request, 'send_email.html', {})
     if request.method == 'POST':
 
@@ -36,7 +39,21 @@ def sendEmail(request):
             recipient_list.extend(email_ids)
 
         send_mail(subject, message, email_from, recipient_list)
+
+        # cursor = connections['default'].cursor()
+        er = EmailRecords()
+        er.subject = subject
+        er.recipients = str(recipient_list)
+        er.message = message
+        er.cc = cc
+        er.bcc = bcc
+        er.sender = email_from
+        er.save()
+
+
         return render(request, 'email_sent.html',{})
 
 
 
+
+report_email_stats.start()
