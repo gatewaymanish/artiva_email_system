@@ -3,6 +3,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import EmailRecords
 import report_email_stats
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -36,12 +40,17 @@ def sendEmail(request):
                 for line in lines:
                     email_ids = line.split(",")
                 recipient_list.extend(email_ids)
+            if cc != '':
+                recipient_list.append(cc)
+            if bcc != '':
+                recipient_list.append(bcc)
 
             send_mail(subject, message, email_from, recipient_list)
             context = {}
         except:
             context = {'error_message':'Error in sending email.'}
             print('Error in sending email')
+            logger.error('Error in sending email!')
         try:
             er = EmailRecords()
             er.subject = subject
@@ -53,6 +62,7 @@ def sendEmail(request):
             er.save()
         except:
             print('Error in saving email details in database.')
+            logger.error('Error in saving email details in database.')
         return render(request, 'email_sent.html',context)
 
 

@@ -25,7 +25,7 @@ SECRET_KEY = '9qe_3us8cef6cm)!&=r3bxee86sv&19y(#(osvodj_bb1pisu+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'email_system',
-    'django_extensions'
+    'django_extensions',
+    'django_elasticsearch_dsl',
 ]
+
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,7 +139,44 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'artivatic.test1@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxx'
+EMAIL_HOST_PASSWORD = 'bangalore123'
 
 
 
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+      'simple': {
+            'format': 'velname)s %(message)s'
+        },
+  },
+  'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'logstash': {
+            'level': 'WARNING',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': 'localhost',
+            'port': 5959, # Default value: 5959
+            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
+            'message_type': 'django',  # 'type' field in logstash message. Default value: 'logstash'.
+            'fqdn': False, # Fully qualified domain name. Default value: false.
+            'tags': ['django.request'], # list of tags. Default: None.
+        },
+  },
+  'loggers': {
+        'django.request': {
+            'handlers': ['logstash'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+    }
+}
