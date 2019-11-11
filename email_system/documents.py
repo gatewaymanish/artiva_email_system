@@ -21,4 +21,5 @@ class EmailDocument(Document):
             'subject',
             'sender',
             'recipients',
+            'message'
         ]
