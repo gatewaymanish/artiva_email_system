@@ -1,5 +1,5 @@
 APScheduler==3.6.1
-Django==2.2.6
+Django==2.2.13
 django-elasticsearch-dsl==7.1.0
 django-extensions==2.2.5
 elasticsearch==7.0.5
